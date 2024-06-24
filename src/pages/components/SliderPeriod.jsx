@@ -1,5 +1,4 @@
 import { Slider, Grid, Typography } from '@mui/material'
-import '@mui/system'
 import { useSettingStore } from '../../store/setting-store'
 import { useEffect, useState } from 'react'
 

@@ -15,6 +15,7 @@ import {
 import { useState } from 'react'
 import { useForm } from '../../hooks/useForm'
 import { useAuthSotre } from '../../store/auth-store'
+import { useProjectStore } from '../../store/project'
 
 const style = {
   position: 'absolute',
@@ -30,6 +31,7 @@ const style = {
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
+  zIndex: 90,
 }
 const formData = {
   unit: true,
@@ -42,6 +44,7 @@ const formData = {
 
 export const ScenarioModal = () => {
   const uid = useAuthSotre((state) => state.uid)
+  const createProject = useProjectStore((state) => state.createProject)
   const {
     unit,
     leakage,
@@ -58,7 +61,7 @@ export const ScenarioModal = () => {
   const handleCheckboxChange = (name) => {
     onInputChange({ target: { name, value: !formState[name] } })
   }
-  const onSubmit = async (e) => {
+  const onSubmit = (e) => {
     e.preventDefault()
     const setting = {
       unit: formState.unit,
@@ -69,12 +72,7 @@ export const ScenarioModal = () => {
       project_name: formState.project_name,
       user_id: uid,
     }
-    const criteria = {
-      value: formState.m3kw,
-    }
-    console.log('pasa por el modal de setting', criteria, setting)
-    //    putSetting(setting)
-    //    putCriteria(filterCriteria?.id, criteria)
+    createProject(setting, handleClose)
   }
   return (
     <div>
@@ -275,8 +273,14 @@ export const ScenarioModal = () => {
                   mt: 2,
                 }}
               >
-                <Button type='submit'>Save</Button>
-                <Button color='warning' onClick={() => setOpen(!open)}>
+                <Button type='submit' variant='contained'>
+                  Save
+                </Button>
+                <Button
+                  color='warning'
+                  variant='contained'
+                  onClick={() => setOpen(!open)}
+                >
                   Cancel
                 </Button>
               </Grid>

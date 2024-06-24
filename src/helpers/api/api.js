@@ -29,3 +29,6 @@ export const axiosValuesEquip = axios.create({
 export const axiosSetting = axios.create({
   baseURL: `http://${prodConnection}/api/setting`,
 })
+export const axiosProject = axios.create({
+  baseURL: `http://${prodConnection}/api/project`,
+})
